@@ -1,6 +1,7 @@
 import httplib2
 import os
 from termcolor import colored, cprint
+import unicodedata
 clear = lambda: os.system('cls')
 clear()
 cprint('\n    ███    █▄     ▄███████▄    ▄███████▄    ▄████████    ▄████████    ▄████████     ███        ▄████████    ▄████████ \n'
@@ -13,7 +14,6 @@ cprint('\n    ███    █▄     ▄███████▄    ▄██�
 '    ████████▀   ▄████▀       ▄████▀        ██████████   ███    ███  ▄████████▀     ▄████▀     ███    █▀    ███    ███ \n'
 '                                                        ███    ███                                         ███    ███ \n', 'green')
 cprint('---------> JVC Collector Checker V1.0\n', 'green', 'on_red')
-
 def check(pseudo):
 	c = httplib2.Http('.cache')
 	url = 'http://www.jeuxvideo.com/profil/' + pseudo + '?mode=infos'
@@ -23,9 +23,12 @@ def check(pseudo):
 	else:
 		cprint(pseudo + ' est disponible', 'green')
 
+def strip_accents(s):
+	return ''.join(c for c in unicodedata.normalize('NFD', s)
+		if unicodedata.category(c) != 'Mn')
+
 path = input('Chemin d\'accès du fichier ?')
 cprint('Checking...', 'yellow')
 with open(path) as f:
 	for pseudo in f:
-		check(pseudo.rstrip('\n').lower())
-	
+		check(strip_accents(pseudo.rstrip('\n').lower()))
