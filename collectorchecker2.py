@@ -27,5 +27,5 @@ path = input('Chemin d\'accès du fichier ?')
 cprint('Checking...', 'yellow')
 with open(path) as f:
 	for pseudo in f:
-		check(pseudo.rstrip('\n'))
+		check(pseudo.rstrip('\n').lower())
 	
