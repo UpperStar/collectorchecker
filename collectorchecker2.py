@@ -22,6 +22,9 @@ def check(pseudo):
 		cprint(pseudo + ' est indisponible', 'red')
 	else:
 		cprint(pseudo + ' est disponible', 'green')
+		file = open('result.txt', 'a')
+		file.write(pseudo + '\n')
+		file.close()
 
 def strip_accents(s):
 	return ''.join(c for c in unicodedata.normalize('NFD', s)
