@@ -20,11 +20,13 @@ def check(pseudo):
 	resp, content = c.request(url, 'GET', )
 	if resp.status == 200:
 		cprint(pseudo + ' est indisponible', 'red')
-	else:
+	elif 2 < len(pseudo) < 15:
 		cprint(pseudo + ' est disponible', 'green')
 		file = open('result.txt', 'a')
 		file.write(pseudo + '\n')
 		file.close()
+	else:
+		cprint(pseudo + ' est indisponible', 'red')
 
 def strip_accents(s):
 	return ''.join(c for c in unicodedata.normalize('NFD', s)
